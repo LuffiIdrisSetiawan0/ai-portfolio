@@ -21,23 +21,26 @@ audience, risks, and constraints the writer needs. Be concrete and specific.
 Output 4–7 terse bullet points (start each with "- "). No preamble.`,
 
   writer: `You are WRITER on a multi-agent team.
-Using the objective, the plan, and the research notes, produce the actual
-deliverable the user asked for — well-structured and ready to use.
-Write the deliverable itself (use markdown headings/lists where helpful).
-Do not describe what you are doing; just produce the work. Be concise but complete.`,
+Using the objective, the plan, and the research notes, produce the COMPLETE,
+polished, ready-to-use deliverable the user asked for — this is the final output.
+Make reasonable assumptions; NEVER ask the user for more information.
+Keep it tight and COMPLETE: aim for ~350–550 words and FINISH every section —
+never stop mid-sentence. Prioritize finishing over exhaustive detail.
+Use compact markdown (a few headings, short lists). Do not describe your process.`,
 
-  critic: `You are CRITIC, the quality editor of a multi-agent team.
-You receive a draft deliverable. First, in 2–3 short bullets, name the most
-important improvements (clarity, accuracy, structure, tone).
-Then write "---" on its own line, followed by the FINAL, improved version of
-the deliverable in full. The final version must be self-contained and polished.`,
+  critic: `You are CRITIC, the quality reviewer of a multi-agent team.
+You receive the finished deliverable. Do NOT rewrite it.
+Give a quick quality review:
+- Start with "Score: X/10" on its own line.
+- Then 2–3 short bullets: what's strong, and the most useful improvement(s).
+Be specific and concise (under 100 words total).`,
 };
 
 const MAX_TOKENS: Record<AgentId, number> = {
-  planner: 320,
-  researcher: 520,
-  writer: 950,
-  critic: 1000,
+  planner: 240,
+  researcher: 360,
+  writer: 1500, // generous safety net; the prompt bounds output to ~350–550 words
+  critic: 280,
 };
 
 const TEMPERATURE: Record<AgentId, number> = {
@@ -187,33 +190,31 @@ function simulatedText(agent: AgentId, objective: string): string {
       ].join("\n");
     case "writer":
       return [
-        `## ${capitalize(o)}`,
-        ``,
-        `**The short version:** here is a clear, structured take that a reader can act on immediately.`,
-        ``,
-        `1. **Frame it** — state the goal and who it serves in one line.`,
-        `2. **Make the case** — back the goal with two concrete specifics.`,
-        `3. **Show the path** — give a small, ordered set of next steps.`,
-        ``,
-        `> This draft is intentionally tight; the critic will sharpen it next.`,
-      ].join("\n");
-    case "critic":
-      return [
-        `- Tighten the opening so the value lands in the first line.`,
-        `- Replace any generic phrasing with one concrete example.`,
-        `- Ensure the structure is skimmable end-to-end.`,
-        ``,
-        `---`,
-        ``,
-        `## ${capitalize(o)}`,
+        `# ${capitalize(o)}`,
         ``,
         `**Bottom line:** a focused, ready-to-use result that leads with the outcome and backs it with specifics.`,
         ``,
-        `1. **Frame** — one sentence on the goal and its audience.`,
-        `2. **Evidence** — two concrete, verifiable supporting points.`,
-        `3. **Action** — three crisp next steps the reader can take today.`,
+        `## Overview`,
+        `A clear, structured response a reader can act on immediately — framed for the right audience, grounded in concrete details.`,
         ``,
-        `_Connect a live model (set LLM_API_KEY) to replace this simulated run with real agent output._`,
+        `## Key points`,
+        `1. **Frame** — state the goal and who it serves in one line.`,
+        `2. **Evidence** — back it with two concrete, verifiable specifics.`,
+        `3. **Action** — give three crisp next steps the reader can take today.`,
+        ``,
+        `## Next steps`,
+        `- Start with the highest-leverage action above.`,
+        `- Review, measure the result, and iterate once.`,
+        ``,
+        `_This is a simulated run — set LLM_API_KEY to generate real agent output._`,
+      ].join("\n");
+    case "critic":
+      return [
+        `Score: 8/10`,
+        ``,
+        `- **Strong:** leads with the outcome and stays skimmable end-to-end.`,
+        `- **Improve:** swap one generic line for a concrete example.`,
+        `- **Improve:** tighten the opening so the value lands in the first sentence.`,
       ].join("\n");
   }
 }

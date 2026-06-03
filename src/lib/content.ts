@@ -114,7 +114,7 @@ export const projects: Project[] = [
     title: "Orchestrator",
     tagline: "Live multi-agent pipeline · the demo on this page",
     description:
-      "A planner–researcher–writer–critic pipeline that decomposes any objective, gathers context, drafts a deliverable, then critiques and revises it — streaming every token in real time.",
+      "A planner–researcher–writer–critic pipeline that decomposes any objective, gathers context, writes the deliverable, then reviews and scores it — streaming every token in real time.",
     stack: ["Next.js", "TypeScript", "SSE streaming", "LLM-agnostic", "Edge-ready"],
     highlights: [
       "Typed event stream with per-agent token streaming",
@@ -184,21 +184,21 @@ export const agentPipeline: AgentMeta[] = [
     id: "writer",
     name: "Writer",
     role: "Synthesize",
-    description: "Drafts the deliverable from plan + research.",
+    description: "Writes the complete, ready-to-use deliverable.",
     accent: "signal",
   },
   {
     id: "critic",
     name: "Critic",
-    role: "Refine",
-    description: "Audits the draft, scores it, and drives one revision.",
+    role: "Review",
+    description: "Scores the result and flags concrete improvements.",
     accent: "amber",
   },
 ];
 
 export const exampleObjectives: string[] = [
-  "Draft a go-to-market plan for an AI note-taking app",
-  "Explain RAG vs. fine-tuning to a non-technical CEO",
-  "Design a 3-step onboarding email sequence for a SaaS",
-  "Outline a technical blog post on multi-agent systems",
+  "Plan a 3-day weekend trip to Tokyo on a budget",
+  "Write a professional email to reschedule a client meeting",
+  "Create a 7-day beginner home workout plan",
+  "Draft a simple business plan for a coffee shop",
 ];

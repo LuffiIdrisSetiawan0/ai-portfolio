@@ -178,15 +178,10 @@ export function AgentDemo() {
     setRunning(false);
   }
 
-  // derive final deliverable from critic output (split on the "---" marker)
-  const criticText = agents.critic.text;
-  let finalText = "";
-  if (agents.critic.status !== "idle") {
-    const sepIdx = criticText.search(/\n-{3,}\n/);
-    finalText =
-      sepIdx !== -1 ? criticText.slice(sepIdx).replace(/^\n-{3,}\n/, "") : criticText;
-  }
-  const showFinal = agents.critic.status === "done" && finalText.trim().length > 0;
+  // the writer produces the final deliverable; the critic only reviews/scores it
+  const finalText = agents.writer.text;
+  const showFinal =
+    agents.writer.status === "done" && finalText.trim().length > 0;
 
   async function copyFinal() {
     try {
@@ -222,7 +217,7 @@ export function AgentDemo() {
                 run();
               }
             }}
-            placeholder="Give the team a task — e.g. draft a launch plan, explain a concept, outline an article…"
+            placeholder="Give the team any task — e.g. plan a weekend trip, write a professional email, create a workout plan…"
             rows={3}
             disabled={running}
             className="w-full resize-none rounded-xl border border-line bg-black/30 p-3.5 text-[15px] leading-relaxed text-paper placeholder:text-faint outline-none transition focus:border-aqua/70 focus:ring-1 focus:ring-aqua/40 disabled:opacity-60"
