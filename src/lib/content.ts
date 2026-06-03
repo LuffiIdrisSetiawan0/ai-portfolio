@@ -115,7 +115,7 @@ export const projects: Project[] = [
     tagline: "Live multi-agent pipeline · the demo on this page",
     description:
       "A planner–researcher–writer–critic pipeline that decomposes any objective, gathers context, drafts a deliverable, then critiques and revises it — streaming every token in real time.",
-    stack: ["Next.js", "TypeScript", "SSE streaming", "Claude", "Edge-ready"],
+    stack: ["Next.js", "TypeScript", "SSE streaming", "LLM-agnostic", "Edge-ready"],
     highlights: [
       "Typed event stream with per-agent token streaming",
       "Provider-agnostic LLM client (OpenAI-compatible + Anthropic)",
